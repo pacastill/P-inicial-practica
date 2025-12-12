@@ -1,0 +1,152 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Personajes</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="list virtual-list media-list searchbar-found"></div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function() {
+        var self = this;
+        var app = self.$app;
+        var $$ = self.$$;
+
+        //Plantilla del popups
+        var popupTemplate = 
+          '<div class="popup">' +
+            '<div class="view">' +
+              '<div class="page">' +
+                '<div class="navbar">' +
+                  '<div class="navbar-inner">' +
+                    '<div class="title">{{name}}</div>' +
+                    '<div class="right">' +
+                      '<a href="#" class="link popup-close">Cerrar</a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="page-content">' +
+                  '<div class="block" style="text-align: center;">' +
+                    '<img src="{{image}}" style="width: 150px; border-radius: 50%; margin-top: 20px;">' +
+                    '<h2>{{name}}</h2>' +
+                  //Vista como siguiendo al título
+                    '<p>Especie: {{species}}</p>' +
+                    '<p>Estado: {{status}}</p>' +
+                    '<p>Género: {{gender}}</p>' +
+                  '</div>' +
+                  //Ver las cosas en lista más ordenado
+                  '<div class="list simple-list">' +
+                    '<ul>' +
+                      '<li>Origen: <strong>{{origin.name}}</strong></li>' +
+                      '<li>Ubicación: <strong>{{location.name}}</strong></li>' +
+                    '</ul>' +
+                  '</div>' +
+                  '<div class="block-title">Historial de Apariciones</div>' +
+                  // ACORDEÓN
+                  '<div class="list accordion-list">' +
+                    '<ul>' +
+                      '<li class="accordion-item">' +
+                        '<a href="#" class="item-content item-link">' +
+                          '<div class="item-inner">' +
+                            '<div class="item-title">Ver Episodios ({{episodesList.length}})</div>' +
+                          '</div>' +
+                        '</a>' +
+                        '<div class="accordion-item-content">' +
+                          '<div class="list simple-list">' +
+                            '<ul>' +
+                              '{{#each episodesList}}' +
+                                '<li>Episodio {{this}}</li>' +
+                                //TO DO: hacer que se vea el nombre del episodio quizá
+                              '{{/each}}' +
+                            '</ul>' +
+                          '</div>' +
+                        '</div>' +
+                      '</li>' +
+                    '</ul>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        
+        var compiledPopup = Template7.compile(popupTemplate);
+
+        app.request.json('https://rickandmortyapi.com/api/character', function (data) {
+
+          var itemsWithIndex = data.results.map(function(item, index){
+            item.index = index;
+            return item;
+          });
+          
+          self.virtualList = app.virtualList.create({
+
+            el: self.$el.find('.virtual-list'),
+            items: data.results,
+            searchAll: function (query, items) {
+              var found = [];
+              for (var i = 0; i < items.length; i++) {
+                if (items[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+              }
+              return found;
+            },
+            
+            itemTemplate: 
+              '<li>' +
+                '<a href="#" class="item-link item-content" data-index="{{index}}">' +
+                  '<div class="item-media">' + 
+                    '<img src="{{image}}" style="width: 44px; border-radius: 50%">' + 
+                  '</div>' +
+                  '<div class="item-inner">' +
+                    '<div class="item-title-row">' +
+                      '<div class="item">{{name}}</div>' +
+                    '</div>' +
+                    '<div class="item-subtitle">{{species}} - {{status}}</div>' +
+                  '</div>' +
+                '</a>' +
+              '</li>',
+            
+            height: 73,
+          });
+
+          self.$el.find('.virtual-list').on('click', '.item-link', function (e) {
+            var index = $(this).attr('data-index');
+            var item = self.virtualList.items[index];
+          
+            
+            var cleanEpisodes = item.episode.map(function(url) {
+              return url.split('/').pop();
+            });
+
+            var templateData = Object.assign({}, item, {
+              episodesList: cleanEpisodes
+            });
+
+            var popupHTML = compiledPopup(templateData);
+            app.popup.create({
+              content: popupHTML,
+              animate: true
+            }).open();
+
+          });
+
+        });
+      },
+      pageBeforeRemove: function () {
+        var self = this;
+        if (self.virtualList) self.virtualList.destroy();
+      }
+    }
+  }
+</script>

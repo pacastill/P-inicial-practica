@@ -1,0 +1,154 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Locaciones</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="list virtual-list media-list searchbar-found"></div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function() {
+        var self = this;
+        var app = self.$app; 
+        var $$ = self.$$; // Dom7, la herramienta para seleccionar elementos
+        
+        //Plantilla del popups
+        var popupTemplate = 
+          '<div class="popup">' +
+            '<div class="view">' +
+              '<div class="page">' +
+                '<div class="navbar">' +
+                  '<div class="navbar-inner">' +
+                    '<div class="title">{{name}}</div>' +
+                    '<div class="right">' +
+                      '<a href="#" class="link popup-close">Cerrar</a>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="page-content">' +
+                  '<div class="block" style="text-align: center;">' +
+                    '<img src="{{image}}" style="width: 150px; border-radius: 50%; margin-top: 20px;">' +
+                    '<h2>{{name}}</h2>' +
+                  '</div>' +
+                  //Ver las cosas en lista más ordenado
+                  '<div class="list simple-list">' +
+                    '<ul>' +
+                      '<li>Tipo: <strong>{{type}}</strong></li>' +
+                      '<li>Dimensión: <strong>{{dimension}}</strong></li>' +
+                    '</ul>' +
+                  '</div>' +
+                  '<div class="block-title">Residentes</div>' +
+                  // ACORDEÓN
+                  '<div class="list accordion-list">' +
+                    '<ul>' +
+                      '<li class="accordion-item">' +
+                        '<a href="#" class="item-content item-link">' +
+                          '<div class="item-inner">' +
+                            '<div class="item-title">Ver residentes ({{residentsList.length}})</div>' +
+                          '</div>' +
+                        '</a>' +
+                        '<div class="accordion-item-content">' +
+                          '<div class="list simple-list">' +
+                            '<ul>' +
+                              '{{#each residentsList}}' +
+                                '<li>Episodio  {{this}}</li>' +
+                                //TO DO: hacer que se vea el nombre del episodio quizá
+                              '{{/each}}' +
+                            '</ul>' +
+                          '</div>' +
+                        '</div>' +
+                      '</li>' +
+                    '</ul>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        
+        var compiledPopup = Template7.compile(popupTemplate);
+
+        app.request.json('https://rickandmortyapi.com/api/location', function (data) {
+          
+
+          self.virtualList = app.virtualList.create({
+            el: self.$el.find('.virtual-list'),
+            items: data.results,
+
+            searchAll: function (query, items) {
+              var found = [];
+              for (var i = 0; i < items.length; i++) {
+                if (items[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+              }
+              return found;
+            },
+
+            renderItem: function(item,index) {
+              return '<li>' +
+                '<a href="#" class="item-link item-content" data-index="' + index + '">' +
+                  '<div class="item-inner">' +
+                    '<div class="item-title-row">' +
+                      '<div class="item-title">' + item.name + '</div>' +
+                    '</div>' +
+                    '<div class="item-subtitle">' + item.type + ' - ' + item.dimension + '</div>' +
+                  '</div>' +
+                '</a>' +
+              '</li>';
+            },
+            // Altura de la fila
+            height: 73,
+          });
+          self.$el.find('.virtual-list').on('click', '.item-link', function (e) {
+            var index = $(this).attr('data-index');
+            var item = self.virtualList.items[index];
+
+            var popupHTML = 
+              '<div class="popup">' +
+                '<div class="view">' +
+                  '<div class="page">' +
+                    '<div class="navbar">' +
+                      '<div class="navbar-inner">' +
+                        '<div class="title">' + item.name + '</div>' +
+                        '<div class="right">' +
+                          '<a href="#" class="link popup-close">Cerrar</a>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="page-content">' +
+                      '<div class="block" style="text-align: center;">' +
+                        '<h2>' + item.name + '</h2>' +
+                        '<p>Tipo: ' + item.type + '</p>' +
+                        '<p>Dimensión: ' + item.dimension + '</p>' +
+                        '<p>Hora de la creación: ' + item.created + '</p>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+
+            app.popup.create({
+              content: popupHTML,
+              animate: true
+            }).open();
+
+          });
+        });
+      },
+      pageBeforeRemove: function () {
+        var self = this;
+        if (self.virtualList) self.virtualList.destroy();
+      }
+    }
+  }
+</script>

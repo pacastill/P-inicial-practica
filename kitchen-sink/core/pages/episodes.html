@@ -1,0 +1,95 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
+          </a>
+        </div>
+        <div class="title">Episodios</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="list virtual-list media-list"></div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function() {
+        var self = this;
+        var app = self.$app;
+        var $$ = self.$$;
+
+        app.request.json('https://rickandmortyapi.com/api/episode', function (data) {
+          
+          self.virtualList = app.virtualList.create({
+            el: self.$el.find('.virtual-list'),
+            items: data.results,
+            searchAll: function (query, items) {
+              var found = [];
+              for (var i = 0; i < items.length; i++) {
+                if (items[i].name.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+              }
+              return found;
+            },
+
+            renderItem: function(item, index) {
+              return '<li>' +
+                '<a href="#" class="item-link item-content"" data-index="' + index + '">' + 
+                  '<div class="item-inner">' +
+                    '<div class="item-title-row">' +
+                      '<div class="item-title">' + item.episode + ': ' + item.name + '</div>' +
+                    '</div>' +
+                    '<div class="item-subtitle">Emitido: ' + item.air_date + '</div>' +
+                  '</div>' +
+                '</a>' +
+              '</li>';
+            },
+            height: 50,
+          });
+          self.$el.find('.virtual-list').on('click', '.item-link', function (e) {
+            var index = $(this).attr('data-index');
+            var item = self.virtualList.items[index];
+
+            var popupHTML = 
+              '<div class="popup">' +
+                '<div class="view">' +
+                  '<div class="page">' +
+                    '<div class="navbar">' +
+                      '<div class="navbar-inner">' +
+                        '<div class="title">' + item.episode + ': ' + item.name + '</div>' +
+                        '<div class="right">' +
+                          '<a href="#" class="link popup-close">Cerrar</a>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="page-content">' +
+                      '<div class="block" style="text-align: center;">' +
+                        '<h2>' + item.name + '</h2>' +
+                        '<p>Emitido: ' + item.air_date + '</p>' +
+                        '<p>Hora de la creación: ' + item.created + '</p>' +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+
+            app.popup.create({
+              content: popupHTML,
+              animate: true
+            }).open();
+
+          });
+        });
+      },
+      pageBeforeRemove: function () {
+        var self = this;
+        if (self.virtualList) self.virtualList.destroy();
+      }
+    }
+  }
+</script>
