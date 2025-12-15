@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="list virtual-list media-list searchbar-found"></div>
+      <div class="virtual-list searchbar-found"></div>
     </div>
   </div>
 </template>
@@ -93,7 +93,9 @@
           self.virtualList = app.virtualList.create({
 
             el: self.$el.find('.virtual-list'),
-            items: data.results,
+            items: itemsWithIndex,
+            cols: 4,
+            height:200,
             searchAll: function (query, items) {
               var found = [];
               for (var i = 0; i < items.length; i++) {
@@ -103,24 +105,18 @@
             },
             
             itemTemplate: 
-              '<li>' +
-                '<a href="#" class="item-link item-content" data-index="{{index}}">' +
-                  '<div class="item-media">' + 
-                    '<img src="{{image}}" style="width: 44px; border-radius: 50%">' + 
+              '<div style="width: 25%; float: left; padding: 12px; box-sizing: border-box;">' +
+                '<div class="card demo-card-header-pic" data-index="{{index}}" style="margin: 0; height: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">' +
+                  '<div style="background-image:url({{image}}); height: 200px; background-size: cover; background-position: center;" class="card-header align-bottom color-white">' + 
                   '</div>' +
-                  '<div class="item-inner">' +
-                    '<div class="item-title-row">' +
-                      '<div class="item">{{name}}</div>' +
-                    '</div>' +
-                    '<div class="item-subtitle">{{species}} - {{status}}</div>' +
+                  '<div class="card-content card-content-padding" style="padding: px;">' +
+                    '<p style="font-size: 15px; margin: 0; color: black;">{{name}}</p>' +
                   '</div>' +
-                '</a>' +
-              '</li>',
-            
-            height: 73,
+                '</div>' +
+              '</div>',
           });
 
-          self.$el.find('.virtual-list').on('click', '.item-link', function (e) {
+          self.$el.find('.virtual-list').on('click', '.card', function (e) {
             var index = $(this).attr('data-index');
             var item = self.virtualList.items[index];
           
