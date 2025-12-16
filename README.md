@@ -1,110 +1,20 @@
-<a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://cdn.framework7.io/i/support-badge.png" height="20"></a>
+# Primera Tarea: Práctica Profesional
 
-# Framework7
+Este proyecto viene siendo para construir una Single Page Application (SPA) desarrollada como parte de la práctica industrial.
+La aplicación consume la API pública de Rick y Morty para listar personajes, ubicaciones y episodios utilizando Framework7 Core en su tercera versión. 
 
-Full Featured Mobile HTML Framework For Building iOS & Android Apps
+# Herramientas utilizadas
+
+* Framework7 Core (v3): Se utilizó la versión sin empaquetadores para manejo de la interfaz, navegación y lógica.
+* Dom7: Utilizadad de manipulación del DOM integrada en Framework7
+* Rick y Morty API: API REST pública utilizada para obtener los datos JSON
+* HTML5 / CSS / JavaScript: EStrutura y lógica base. (No se han toccado los estilos CSS aún)
+
+# Instalación y ejecución de la aplicación
+
+* 1. Instalar herramientas globales utlizadas ```npm install --global gulp```.
+* 2. Se deben instalar las dependencias ejecutando el comando ``` npm install```  para descargar los paquetes. 
+* 3. Para poder compilar la versión core del framework se utiliza el siguiente comando: ``` npm run core:dev" ``` este comando lo que hace es ejecutar "gulp build-core && gulp ks-core && gulp server-core", por lo que en caso que sólo se lleguen a compilar los archivos y no se ejecute el servidor, lo cual se debe a problemas de compatibilidad con Node.js  y el framework ocupado. 
+  * Ejecutar ``` npx gulp server-core ``` para ejecutar la parte del comando que falla. 
 
 
-## Supporting Framework7
-
-Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider:
-
-* [Become a backer or sponsor on Patreon.](https://www.patreon.com/vladimirkharlampidi)
-
-## Getting Started
-  * [Getting Started Guide](https://framework7.io/docs/introduction.html)
-
-## Framework7 Development
-
-Framework7 uses `gulp` and `rollup` to build a development (build) and production versions.
-
-First you need to have `gulp-cli` which you should install globally.
-
-```
-$ npm install --global gulp
-```
-
-Then install all dependencies, in repo's root:
-
-```
-$ npm install
-```
-
-## Development Builds
-
-The following npm scripts are available to create development builds:
-
-* `build:dev` - build development versions of all packages (Core, Vue, React)
-* `build-core:dev` - build development version of Core (vanilla JS) Framework7
-* `build-react:dev` - build development version of Framework7 React package
-* `build-vue:dev` - build development version of Framework7 Vue package
-
-Compiled results will be available in `build/` folder.
-
-## Production builds
-
-To build production versions the following npm scripts are available:
-
-* `build:prod` - build production versions of all packages (Core, Vue, React)
-* `build-core:prod` - build production version of Core (vanilla JS) Framework7
-* `build-react:prod` - build production version of Framework7 React package
-* `build-vue:prod` - build production version of Framework7 Vue package
-
-Compiled results will be available in `packages/` folder.
-
-## Kitchen Sink
-
-To run Kitchen Sink with development environment (development version will be built first) use the following npm scripts:
-
-* `dev` - build development versions of all packages (Core, Vue, React) and run local server. With this common script it will watch for changes in all `src/` files and rebuild all packages (Core, Vue, React)
-* `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
-* `react:dev` - build development version of Framework7 React package and run React Kitchen Sink
-* `vue:dev` - build development version of Framework7 Vue package and run Vue Kitchen Sink
-
-To Run Kitchen Sink with production builds (already compiled `/packages/` will be used), use the following npm scripts:
-
-* `prod` - build Kitchen Sinks with production versions
-* `core:prod` - run core Kitchen Sink with production Framework7 core package
-* `react:prod` - run React Kitchen Sink with production build of Framework7 React
-* `vue:prod` - run Vue Kitchen Sink with production build of Framework7 Vue
-
-## Source Code
-
-Whole source code is located under `/src/` folder.
-
-Framework7 uses Phenome compiler to generate React & Vue components. So all the React & Vue related code is under the `/src/phenome/` folder
-
-Framework7 core library source code is under `/src/core/` folder
-
-## Contributing
-
-Before you open an issue please review the [contributing](https://github.com/framework7io/framework7/blob/master/CONTRIBUTING.md) guideline.
-
-**All changes should be commited to `src/` files only!**.
-
-Framework7 uses LESS for CSS compilations, and ES modules JS files.
-
-The project uses [.editorconfig](http://editorconfig.org/) and [ESLint](https://eslint.org/) to define and lint the coding style of each file. We recommend that you install the Editor Config and ESLint extension for your preferred IDE.
-
-If you want to help in Framework7 development and make it event better visit this page: http://framework7.io/contribute/
-
-## Forum
-
-If you have questions about Framework7 or want to help others you are welcome to special forum at http://forum.framework7.io/
-
-## Docs
-
-Documentation available at http://framework7.io/docs/
-
-## Tutorials
-
-Tutorials available at http://framework7.io/tutorials/
-
-## Showcase
-
-Appstore apps made with Framework7: http://framework7.io/showcase/
-
-## Previous Versions
-
-* [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
-* [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
