@@ -138,12 +138,12 @@ function server() {
 gulp.task('server', () => {
   if (env === 'development') watch.all();
   server();
-  return gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
+  return gulp.src('./rick-y-morty/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/rick-y-morty/core/' }));
 });
 gulp.task('server-core', () => {
   if (env === 'development') watch.core();
   server();
-  return gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
+  return gulp.src('./rick-y-morty/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/rick-y-morty/core/' }));
 });
 gulp.task('server-react', () => {
   if (env === 'development') watch.react();
