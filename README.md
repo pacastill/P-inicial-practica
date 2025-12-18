@@ -17,4 +17,18 @@ La aplicación consume la API pública de Rick y Morty para listar personajes, u
 * 3. Para poder compilar la versión core del framework se utiliza el siguiente comando: ``` npm run core:dev" ``` este comando lo que hace es ejecutar "gulp build-core && gulp ks-core && gulp server-core", por lo que en caso que sólo se lleguen a compilar los archivos y no se ejecute el servidor, lo cual se debe a problemas de compatibilidad con Node.js  y el framework ocupado. 
   * Ejecutar ``` npx gulp server-core ``` para ejecutar la parte del comando que falla. 
 
+# Distribución
 
+Hay muchos archivos qu eno quise borrar ya que o me saltaba un error en la consola por algún motivo que tenía que ver con los scripts o el gulpcore. Por loq ue preferí dejarlos, ya que como empecé con la plantilla completa hay muchas cosas enlazadas. apaero finalmente, la distribución de los archivos que se ocuparon quedaría algo así:
+
+- rick-y-morty/core
+  - /css
+    * app.css
+  - /js
+    * app.js
+    * routes.js
+  - pages
+    * characters.html
+    * episodes.html
+    * locations.html
+  * index.html

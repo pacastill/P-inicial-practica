@@ -16,34 +16,29 @@
 <body>
   <div id="app">
     <div class="statusbar"></div>
-
-    <div class="panel panel-left panel-cover panel-resizable theme-dark">
+    <div class="panel panel-left panel-reveal panel-resizable theme-dark panel-visible-by-breakpoint" data-visible-breakpoint="0">
       <div class="page">
         <div class="page-content">
-          
-
           <div class="block-title">Base de Datos</div>
-          
-          <div class="list links-list">
-            <ul>
-              <li>
-                <a href="/characters/" class="panel-close" data-view=".view-main">
-                  <i class="icon material-icons">face</i> Personajes
-                </a>
-              </li>
-              <li>
-                <a href="/locations/" class="panel-close" data-view=".view-main">
-                  <i class="icon material-icons">place</i> Ubicaciones
-                </a>
-              </li>
-              <li>
-                <a href="/episodes/" class="panel-close" data-view=".view-main">
-                  <i class="icon material-icons">tv</i> Episodios
-                </a>
-              </li>
-            </ul>
-          </div>
-
+            <div class="list links-list">
+              <ul>
+                <li>
+                  <a href="/characters/" data-view=".view-main">
+                    <i class="icon material-icons">face</i> Personajes
+                  </a>
+                </li>
+                <li>
+                  <a href="/locations/" data-view=".view-main">
+                    <i class="icon material-icons">place</i> Ubicaciones
+                  </a>
+                </li>
+                <li>
+                  <a href="/episodes/" data-view=".view-main">
+                    <i class="icon material-icons">tv</i> Episodios
+                  </a>
+                </li>
+              </ul>
+            </div>
           <div class="block-title">Sistema</div>
           <div class="list links-list">
             <ul>
@@ -54,25 +49,16 @@
               </li>
             </ul>
           </div>
-
         </div>
       </div>
     </div>
-
     <div class="view view-main view-init ios-edges" data-url="/">
       <div class="page home-page" data-name="home">
-        
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="left">
-              <a href="#" class="link icon-only panel-open" data-panel="left">
-                <i class="icon material-icons">menu</i>
-              </a>
-            </div>
             <div class="title">Rick & Morty</div>
           </div>
         </div>
-
         <div class="page-content home-overlay">
           <div class="block">
             <h1 class="rick-title">¡Estoy harto de todas estas aventuras tan locas!</h1>
@@ -80,7 +66,6 @@
             
           </div>
         </div>
-
       </div>
     </div>
   </div>

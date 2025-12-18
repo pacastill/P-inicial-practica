@@ -492,7 +492,6 @@ code {
 
 /* Imagen de fondo en la página de inicio */
 .home-page {
-  background-image: url('../img/rick-y-morty.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -576,4 +575,39 @@ code {
 .panel-left .list ul:before, .panel-left .list ul:after,
 .panel-left .list li:after {
   display: none !important;
+}
+
+/* Panel siempre visible */
+.panel-left {
+  transform: none !important;
+  visibility: visible !important;
+  width: 300px;
+}
+
+/* Ajustar el contenido principal para que no se superponga */
+.view-main {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+  transition: margin-left 0.3s;
+}
+
+
+/* Asegurar que el contenido se mueva */
+.page-content {
+  overflow-y: auto !important;
+  height: 100% !important;
+}
+
+/* Asegurar que las páginas se muestren correctamente */
+.page {
+  background: #fff;
+}
+
+.theme-dark .page {
+  background: #1f2329;
+}
+
+/* Mejorar la visibilidad del panel */
+.panel-left .page-content {
+  padding-top: 20px;
 }

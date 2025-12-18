@@ -2,12 +2,6 @@
   <div class="page">
     <div class="navbar">
       <div class="navbar-inner sliding">
-        <div class="left">
-          <a href="#" class="link back">
-            <i class="icon icon-back"></i>
-            <span class="ios-only">Back</span>
-          </a>
-        </div>
         <div class="title">Personajes</div>
       </div>
     </div>
@@ -23,6 +17,10 @@
         var self = this;
         var app = self.$app;
         var $$ = self.$$;
+
+        if (app.panel.left) {
+        app.panel.left.open();
+      }
 
         //Plantilla del popups
         var popupTemplate = 
@@ -105,7 +103,7 @@
             },
             
             itemTemplate: 
-              '<div style="width: 25%; float: left; padding: 12px; box-sizing: border-box;">' +
+              '<div style="width: 25%; float: left; padding: 10px; box-sizing: border-box;">' +
                 '<div class="card demo-card-header-pic" data-index="{{index}}" style="margin: 0; height: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">' +
                   '<div style="background-image:url({{image}}); height: 200px; background-size: cover; background-position: center;" class="card-header align-bottom color-white">' + 
                   '</div>' +

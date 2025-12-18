@@ -13,4 +13,19 @@ var app = new Framework7({
   root: '#app',
   theme: theme,
   routes: routes,
+  panel: {
+    swipe: 'false',
+    resizable: true,
+    visibleBreakpoint: 0,
+    closeByBackdropClick: false, 
+  },
+  view:{
+    pushState: false,
+  }
+});
+
+app.on('pageInit', function () {
+  if (app.panel.left) {
+    app.panel.left.open();
+  }
 });
